@@ -29,6 +29,13 @@ Student: %s %s
 Project: %s
 Grade: %s"""%(row[0], row[1], row[2], row[3])
 
+def get_grades_by_student(student_github):
+    query = """SELECT student_github, project_title, grade FROM Grades WHERE student_github = ?"""
+    DB.execute(query, (student_github,))
+    row = DB.fetchall()
+    for x in row:
+        print x
+
 def connect_to_db():
     global DB, CONN
     CONN = sqlite3.connect("hackbright.db")
@@ -76,6 +83,8 @@ def main():
             get_grade_by_project(*args)
         elif command == "give_grade":
             give_student_grade(*args)
+        elif command == "all_grades":
+            get_grades_by_student(*args)
 
 
     CONN.close()
