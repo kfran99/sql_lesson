@@ -5,11 +5,8 @@
         <h2>Grades:</h2>
         <ul>
         {% for grade in grades %}
-            <li>{{ grade['project_title'] }}: {{ grade['grade'] }}</li>
+            <li><a href ="/project?project={{ grade['project_title'] }}">{{ grade['project_title'] }}</a>: {{ grade['grade'] }}</li>
         {% endfor %}
         </ul>
-
-        <p> This student has shown extreme recalcitrance and has generally proved to be unreliable.</p>
-        <p>It is my recommendation that they be put on double-secret probation for the remainder of the course.</p>
     </body>
 </html>
