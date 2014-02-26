@@ -50,7 +50,7 @@ def connect_to_db():
     DB = CONN.cursor()
 
 def make_new_student(first_name, last_name, github):
-    query = """INSERT into Students values (?,?,?)"""
+    query = """INSERT into Students (first_name, last_name, github) values (?,?,?)"""
     DB.execute(query, (first_name, last_name, github))
     CONN.commit()
     return (first_name, last_name, github) 
@@ -61,11 +61,12 @@ def make_new_project(title, description, max_grade):
     CONN.commit()
     return (title, description, max_grade)
 
-def give_student_grade(student_github, project_title, grade):
-    query = """INSERT into Grades values (?,?,?)"""
-    DB.execute(query, (student_github, project_title, grade))
+def give_student_grade(project_title, student_github, grade):
+    query = """INSERT into Grades (project_title, student_github, grade) values (?,?,?)"""
+    DB.execute(query, (project_title, student_github, grade))
     CONN.commit()
-    return (student_github, project_title, grade)
+    print "give_student_grade: ", (project_title, student_github, grade)
+    return (project_title, student_github, grade)
 
 def main():
     connect_to_db()

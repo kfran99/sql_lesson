@@ -1,6 +1,6 @@
 import hackbright_app
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
 
@@ -35,12 +35,15 @@ def get_grades():
 @app.route("/grade")
 def give_grade():
     hackbright_app.connect_to_db()
-    title = request.args.get("title")
+    project_title = request.args.get("project_title")
     student_github = request.args.get("student_github")
     grade = request.args.get("grade")
-    give_grade = hackbright_app.give_student_grade(title, student_github, grade)
-    html = render_template("grade.html", give_grade=give_grade)
-    return html
+    give_grade = hackbright_app.give_student_grade(project_title, student_github, grade)
+    
+    return redirect('/student?github=%s' % student_github)
+#    html = render_template("grade.html", give_grade=give_grade)
+    # print give_grade
+#   return html
 
 @app.route("/new_student")
 def post_student():
@@ -54,7 +57,7 @@ def post_student2():
     last_name = request.args.get("last_name")
     student = hackbright_app.make_new_student(first_name, last_name, student_github)
     html = render_template("new_student2.html", student=student)
-                                                
+    # print student                                         
     return html
 
 @app.route("/new_project")
@@ -69,7 +72,7 @@ def post_project2():
     max_grade = request.args.get("max_grade")
     project = hackbright_app.make_new_project(title, description, max_grade)
     html = render_template("new_project2.html", project=project)
-                                                
+    # print project                                            
     return html
 
 
